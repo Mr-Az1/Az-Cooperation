@@ -32,18 +32,44 @@ vector<pii> wea,ar;
 int mcnt=1,lob=3,day=1,energy;
 int lim[100];
 int up[5][6]={{0,1,2,3,4,5},{0,1,2,3,4,5},{0,1,2,3,4,5},{0,1,2,3,4,5},{0,1,2,3,4,5}};
+char cyx[1000];
+string Mr_Az[30]={"\n","\n","\n","\n","\n",
+				"                                                   ¡ö       ¡ö                          ¡ö\n", 
+				"                                                 ¡ö ¡ö     ¡ö¡ö                      ¡ö¡ö\n",
+				"                                                ¡ö   ¡ö   ¡ö  ¡ö   ¡ö   ¡ö¡ö       ¡ö  ¡ö\n",
+				"                                               ¡ö     ¡ö ¡ö    ¡ö    ¡ö¡ö        ¡ö   ¡ö¡ö  ¡ö¡ö¡ö\n",
+				"                                              ¡ö      ¡ö¡ö     ¡ö    ¡ö         ¡ö¡ö¡ö   ¡ö    ¡ö\n",
+				"                                             ¡ö        ¡ö¡ö       ¡ö   ¡ö    ¡ö  ¡ö        ¡ö   ¡ö¡ö¡ö¡ö\n"};
+string And[30]={"\n","\n","\n","\n","\n",
+		"                                                                     ¡ö¡ö¡ö                                                          \n",
+		"                                                                    ¡ö    ¡ö                                                      \n",
+		"                                                                    ¡ö    ¡ö                                                  \n",
+		"                                                                     ¡ö¡ö¡ö                                                    \n",
+		"                                                                    ¡ö  ¡ö  ¡ö                                                     \n",
+		"                                                                    ¡ö    ¡ö                                                      \n",
+		"                                                                     ¡ö¡ö¡ö ¡ö                                                       \n",
+		"                                                                                                                  \n",
+	};
+string Fei_Yao[30]={"\n","\n","\n","\n","\n",
+				"                                                 ¡ö¡ö¡ö¡ö                    ¡ö    ¡ö            \n", 
+				"                                                ¡ö                ¡ö          ¡ö  ¡ö            \n",  
+				"                                               ¡ö¡ö¡ö¡ö  ¡ö¡ö¡ö                ¡ö¡ö                \n",
+				"                                              ¡ö        ¡ö    ¡ö  ¡ö            ¡ö    ¡ö¡ö      ¡ö¡ö¡ö \n",
+				"                                             ¡ö        ¡ö¡ö¡ö¡ö¡ö ¡ö            ¡ö   ¡ö   ¡ö   ¡ö    ¡ö      \n",
+				"                                            ¡ö          ¡ö        ¡ö            ¡ö   ¡ö   ¡ö   ¡ö    ¡ö       \n",
+				"                                           ¡ö             ¡ö¡ö¡ö  ¡ö  ¡ö¡ö¡ö¡ö  ¡ö    ¡ö¡ö¡ö¡ö  ¡ö¡ö¡ö      \n"};
 inline void set_window(){system("mode con cols=150 lines=45");return ;} 
 inline int rand0 (int p)   {return hsh()%p;}
 inline int rand1 (int p)   {return hsh()%p+1;}
-inline int damcol(string p){for(rint i=1;i<=4;i++) if(damage_color[i].first==p) 	return damage_color[i].second;	}
-inline int levcol(string p){for(rint i=1;i<=3;i++) if(level_color[i].first==p) 		return level_color[i].second;	}
-inline int infcol(string p){for(rint i=1;i<=4;i++) if(info_color[i].first==p) 		return info_color[i].second;	}
-inline int damnum(string p){for(rint i=1;i<=4;i++) if(damage_color[i].first==p) 	return i;						}
-inline int levnum(string p){for(rint i=1;i<=3;i++) if(level_color[i].first==p) 		return i;						}
-inline int infnum(string p){for(rint i=1;i<=4;i++) if(info_color[i].first==p) 		return i;						}
-inline int damnum(int p)   {for(rint i=1;i<=4;i++) if(damage_color[i].second==p)	return i;						}
-inline int levnum(int p)   {for(rint i=1;i<=3;i++) if(level_color[i].second==p) 	return i;						}
-inline int infnum(int p)   {for(rint i=1;i<=4;i++) if(info_color[i].second==p) 		return i;						}
+inline int damcol(string p){for(rint i=1;i<=4;i++) if(damage_color[i].first==p) 	return damage_color[i].second;	return -1;}
+inline int levcol(string p){for(rint i=1;i<=3;i++) if(level_color[i].first==p) 		return level_color[i].second;	return -1;}
+inline int infcol(string p){for(rint i=1;i<=4;i++) if(info_color[i].first==p) 		return info_color[i].second;	return -1;}
+inline int damnum(string p){for(rint i=1;i<=4;i++) if(damage_color[i].first==p) 	return i;						return -1;}
+inline int levnum(string p){for(rint i=1;i<=3;i++) if(level_color[i].first==p) 		return i;						return -1;}
+inline int infnum(string p){for(rint i=1;i<=4;i++) if(info_color[i].first==p) 		return i;						return -1;}
+inline int damnum(int p)   {for(rint i=1;i<=4;i++) if(damage_color[i].second==p)	return i;						return -1;}
+inline int levnum(int p)   {for(rint i=1;i<=3;i++) if(level_color[i].second==p) 	return i;						return -1;}
+inline int infnum(int p)   {for(rint i=1;i<=4;i++) if(info_color[i].second==p) 		return i;						return -1;}
 inline int damcol(int p)   {return damage_color[p].second;	}
 inline int levcol(int p)   {return level_color[p].second;	}
 inline int infcol(int p)   {return info_color[p].second;	}
@@ -51,6 +77,7 @@ inline string damname(int p){
 	if(p<=4) return damage_color[p].first;
 	int i;
 	for(i=1;i<=4;i++) if(damage_color[i].second==p) return damage_color[i].first;
+	return "";
 }
 inline string levname(int p){
 	if(p<=3) return level_color[p].first;
@@ -61,18 +88,19 @@ inline string infname(int p){
 	if(p<=4) return info_color[p].first;
 	int i;
 	for(i=1;i<=3;i++) if(info_color[i].second==p) return info_color[i].first;
+	return ""; 
 }
 inline string workname(int p){return work_name[p];}
 inline string worksuc(int p){return work_suc[p];}
 inline bool is(char ch){
 	string ss="~~~<^_^>~~~ !@#$%&*()+-={}[]|\\:;\"\',./?";
-	for(rint i=0;i<ss.size();i++) if(ch==ss[i]) return 1;
+	for(rint i=0;i<siz(ss);i++) if(ch==ss[i]) return 1;
 	return 0;
 }
 inline bool isdigit(string s){
 	rint i=0;
 	if(s[i]=='-') i++;
-	for(;i<s.size();i++) if(!isdigit(s[i])) return 0;
+	for(;i<siz(s);i++) if(!isdigit(s[i])) return 0;
 	return 1;
 } 
 //inline int sstoi(string s){
@@ -88,18 +116,22 @@ inline string itos(ll x){
 	reverse(s.begin(),s.end());
 	return s;
 }
+inline ll stoi(char ch){if(isdigit(ch)) return ch-'0';else return -1;}
 inline auto stoc(string s){
-	char res[1000];
-	for(rint i=0;i<s.size();i++) res[i]=s[i];
-	return res;
+	for(rint i=0;i<siz(s);i++) cyx[i]=s[i];
+	return cyx;
+}
+inline void stoc(auto &t,string s){
+	for(rint i=0;i<siz(s);i++) t[i]=s[i];
+	return ;
 } 
 inline bool check_name(string s){
 	if(s.size()>8) return 0;
-	for(rint i=0;i<s.size();i++) if(!(isalpha(s[i])||isdigit(s[i])||is(s[i]))) return 0;
+	for(rint i=0;i<siz(s);i++) if(!(isalpha(s[i])||isdigit(s[i])||is(s[i]))) return 0;
 	return 1;
 }
 template<typename T>
-inline void print(T s,int color=7,int t=1){
+inline void print(T s,int color=7){
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),color);
 	cout<<s;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),7);
@@ -107,7 +139,7 @@ inline void print(T s,int color=7,int t=1){
 }
 inline void sprint(string s,int color=7,int t=1){
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),color);
-	for(rint i=0;i<s.size();i++) putchar(s[i]),Sleep(t);
+	for(rint i=0;i<siz(s);i++) putchar(s[i]),Sleep(t);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),7);
 	return ;
 }
@@ -126,11 +158,15 @@ inline void sprintw(string s,int w=0,int t=1){
 	for(rint i=siz(s);i<=w;i++) print(" ");
 	return ;
 }
-inline void printw(string s,int w=0,int t=1){
-	print(s,7,t);
+inline void printw(string s,int w=0){
+	print(s,7);
 	for(rint i=siz(s);i<=w;i++) print(" ");
 	return ;
 }
+inline void fputs(string s,FILE *stream){
+	for(rint i=0;i<siz(s);i++) fputc(char(s[i]),stream);
+	return ;
+} 
 inline void clear(stack<int> &s){while(s.size()) s.pop();return ;}
 inline void clear(vector<string> &s){s.clear();return ;}
 inline void print(stack<int> s){while(s.size()) printf("%d ",s.top()),s.pop();puts("");}

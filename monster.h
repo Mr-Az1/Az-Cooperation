@@ -71,7 +71,7 @@ inline void init_mon(string namee,string levell,string numm,string storyy,int co
 	moncnt++;
 }
 inline void init_monster(){
-	init_mon("张壬泽","SAn","H-2-16-65",
+	init_mon("异想体一","SAn","H-2-16-65",
 	(string)"8.24\n"+
 	(string)"今天前锋队送来一块石头，他们说这是从这块石头上侦测到了未知高能反应，我知道小组成员都是认为这是对未知探索的契机。\n"+
 	(string)"8.26\n"+
