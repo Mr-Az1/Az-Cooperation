@@ -1,4 +1,4 @@
-#include<D:\Mr.Az\employee.h>
+#include<D:\Mr.Az\monster.h>
 #define save() {plot[choice]=t;clear(t);}
 //bool operator==(stack<int> A,stack<int> B){
 //	if(A.size()!=B.size()) return 0;

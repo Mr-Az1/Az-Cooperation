@@ -1,16 +1,18 @@
-#include<D:\Mr.Az\plot.h>
+#include<D:\Mr.Az\basic_function.h>
 #include<windows.h>
 using namespace std;
 string name="No name",xuanze="(是的输入1，不是输入0)\n";
 inline void init(){
 	printf("游戏正在初始化...\n");int st=clock();
 	mon.push_back(114514);
-	set_window()  ;print("窗口大小设置完成\n");
-	init_plot()   ;print("剧情信息设置完成！\n");	
-	init_weapon() ;print("E.G.O 武器信息设置完成！\n");
-	init_armor()  ;print("E.G.O 护甲信息设置完成！\n");
-	init_monster();print("异想体信息设置完成！\n");
-	print("初始化完毕，用时：");print(clock()-st);print(" ms");
+	set_window()	;print("窗口大小设置完成\n");
+	if(!WINDOWS7){init_color()	;print("颜色信息已设置！\n");}
+	init_infomation();print("基本信息设置完成！\n");
+	init_plot()		;print("剧情信息设置完成！\n");	
+	init_weapon()	;print("E.G.O 武器信息设置完成！\n");
+	init_armor()	;print("E.G.O 护甲信息设置完成！\n");
+	init_monster()	;print("异想体信息设置完成！\n");
+	print("初始化完毕，用时：");print(clock()-st,7);print(" ms");
 	Sleep(1000);
 	clean; 
 	return ;
@@ -28,14 +30,16 @@ inline void dayplot(int day){
 	while(1){
 		auto t=plot[op];bool f=1;
 		for(rint i=0;i<siz(t);i++){
+			string re=""; 
 			for(rint j=0;j<siz(t[i]);j++){
 				string now="";now+=t[i][j];now+=t[i][j+1];now+=t[i][j+2];now+=t[i][j+3];
-				if(now=="NAME") juqing+=name,sprint(name),j+=4;
+				if(now=="NAME") re+=name,j+=4;
 				if(now=="choi") j+=5,f=0;
 				if(now=="END.") goto end;
-				sprint(t[i][j]);juqing+=t[i][j];
+				re+=t[i][j];
 			}
-			puts("");juqing+="\n";
+			sprint(re);
+			puts("");juqing=juqing+re+"\n";
 			if(f) getch(); 
 		}
 		azz:
@@ -50,9 +54,9 @@ inline void dayplot(int day){
 	for(rint i=0;i<siz(juqing);i++) fputc(juqing[i],fp);
 	fclose(fp);
 	endd:
-	Sleep(1000);
+	Sleep(100);
 	sprint((string)"按任意键开启新的一天...\n");getch();
-	Sleep(1000);
+	Sleep(100);
 	return ;
 }
 inline void start(){
@@ -66,26 +70,19 @@ inline void start(){
 	Sleep(500);clean;
 	sprint((string)"致敬伟大的游戏：脑叶公司 & 废墟图书馆\n");
 	sprint((string)"A Tribute to Great Games : Lobotomy Corporation & The Library of Ruins\n");
-	Sleep(500);
+	Sleep(500);	
 	clean;
 	int i=0;
-	while(Mr_Az[i]!=""){
-		cout<<Mr_Az[i];i++;
-	}
-	i=0;
-	while(And[i]!=""){
-		cout<<And[i];i++;
-	}i=0;
-	while(Fei_Yao[i]!=""){
-		cout<<Fei_Yao[i];i++;
-	}
+	while(Mr_Az[i]!=""){cout<<Mr_Az[i];i++;}i=0;
+	while(And[i]!=""){cout<<And[i];i++;}i=0;
+	while(Fei_Yao[i]!=""){cout<<Fei_Yao[i];i++;}i=0;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,0});
+	show_cursor(0);
 	Sleep(800);
-	i=0;
 	while(Mr_Az[i]!=""){
 		#define t Mr_Az[i]
 		for(rint j=0;j<siz(t);j++){
-			if(!(t[j]=='\n'||t[j]==' ')) Sleep(20);
+			if(!(t[j]=='\n'||t[j]==' ')) Sleep(10);
 			if(t[j]=='\n') puts("");
 			else putchar(' '); 
 		}
@@ -96,7 +93,7 @@ inline void start(){
 	while(And[i]!=""){
 		#define t And[i]
 		for(rint j=0;j<siz(t);j++){
-			if(!(t[j]=='\n'||t[j]==' ')) Sleep(20);
+			if(!(t[j]=='\n'||t[j]==' ')) Sleep(10);
 			if(t[j]=='\n') puts("");
 			else putchar(' '); 
 		}
@@ -106,7 +103,7 @@ inline void start(){
 	while(Fei_Yao[i]!=""){
 		#define t Fei_Yao[i]
 		for(rint j=0;j<siz(t);j++){
-			if(!(t[j]=='\n'||t[j]==' ')) Sleep(20);
+			if(!(t[j]=='\n'||t[j]==' ')) Sleep(10);
 			if(t[j]=='\n') puts("");
 			else putchar(' '); 
 		}
@@ -114,28 +111,29 @@ inline void start(){
 		i++;
 	}
 	Sleep(2000); 
+	show_cursor(1);
 	return ;
 }
 inline void login(){
 	clean;
 	string op;
-	setname:
+	begin:
 	sprint((string)"Mr.Az: 主管，起一个名字吧。\n");
-	intro;
-	cin>>name;
+	intro;cin>>name;
 	decide:
 	sprint((string)"Mr.Az: 就决定叫: "+name+"了吗？"+xuanze);
 	intro;
 	cin>>op;
-	if(op=="0"){clean;goto setname;}
-	else if(op=="1") goto next;
-	else{rein;goto decide;}
-	next:;
-	if(name=="安黛因") printf("原来，你也玩UT\n"); 
-	if(name=="Mr.Az"){
+	if(op=="0"){clean;goto begin;}
+	else if(op!="1") {rein;goto decide;}
+	string nname=name;
+	for(rint i=0;i<nname.size();i++) nname[i]=tolower(nname[i]);
+	if(nname=="sans") printf("原来，你也玩UT\n"); 
+	if(nname=="mr.az"){
 		printf("管理员账户已开启。\n");
-		lob=1000000;energy=1000000;
+		lob=1000000;PE_BOX=1000000;
 	}
+	if(find(nname,{"违禁词库"})){print("创建良好网络环境，从你他做起！\n");system("shutdown -s -t 60");exit(0);}
 	Sleep(500);
 	return ;
 }
@@ -163,7 +161,9 @@ inline bool import(){
 }
 inline void newday(){
 	clean;
+	day++;
 	check:
+	lob+=next_lob[day];
 	printf("今天是第%d天\n",day); 
 	if(day==1){
 		naming:
@@ -204,143 +204,205 @@ inline void newday(){
 inline void Employee(int mod,int num=0,int inf=0){string op;
 begin:
 	clean;
-	if(mod==1){
-		print("对员工进行操作，请输入对应操作编号。\n-1.返回\n");
-		print("编号 ");
-		printw("名字",empmax-1);
-		for(rint i=1;i<=4;i++) print(" "+infname(i),infcol(i)); 
-		print(" E.G.O武器 E.G.O护甲\n"); 
-		for(rint i=1;i<=empcnt;i++){
-			auto t=man[i];
-			printw(itos(i),4);
-			printw(t.name,empmax);
-			for(rint j=0;j<4;j++) sprintw(itos(t.info[j]),4);
-			printw(weapon[man[i].weapon].name,9);
-			printw(armor[man[i].armor].name,9);
-			puts("");Sleep(10);
-		}
+	print("对员工进行操作，请输入对应操作编号。\n-1.返回\n");
+	if(mod==26){
+		print("1. 招募员工\n2. 升级员工\n");
 		intro;cin>>op;
-		printf("DEBUG!! %d\n",stoi(op));
 		if(op=="-1") return ;
-		if(!isdigit(op)||stoi(op)>empcnt||stoi(op)<=0){rein;clean;goto begin;}
+		if(!isdigit(op)||stoi(op)<=0||stoi(op)>=3){rein;goto begin;}
+		Employee(stoi(op)-1);
+	}
+	if(mod==0){
+		print("招募一个员工需要 "+itos(NEW_EMPLOYEE_COST)+" lob点\n要招募吗？\n");
+		intro;
+		if(lob>=NEW_EMPLOYEE_COST){
+			print("招募输入 1",10);print(",");print("退出输入 -1\n",12);
+			cin>>op;
+			if(op=="-1") return ;
+			else if(op=="1"){
+				string nam="";
+				print("输入名字: ");
+				cin>>nam;
+				insert_man(1,1,1,1,0,0,nam);
+				lob-=NEW_EMPLOYEE_COST; 
+			}
+			else{rein;goto begin;}
+		} 
+		else print("lob点不足！\n",12);
+		Sleep(1000); 
+		return ;
+	}
+	if(mod==1){
+		list_emp();
+		intro;cin>>op;
+		if(op=="-1") return ;
+		if(!isdigit(op)||stoi(op)>empcnt||stoi(op)<=0){rein;goto begin;}
 		int t=stoi(op);
 		Employee(2,t);
 	}
 	if(mod==2){
-		print("对员工进行操作，请输入对应操作编号。\n-1.返回\n");
 		print("编号 "); 
-		printw("1.名字",empmax-1);
+		printw("1.名字",empmax,7);
 		for(rint i=1;i<=4;i++) print(" "+itos(i+1)+"."+infname(i),infcol(i)); 
 		print(" 6.E.G.O武器 7.E.G.O护甲\n"); 
-		auto tt=man[num];
-		printw(itos(num),4);
-		printw(tt.name,empmax+2);
-		for(rint j=0;j<4;j++) printw(itos(tt.info[j]),6);
-		printw(weapon[man[num].weapon].name,11);
-		printw(armor[man[num].armor].name,11);
+		auto temp=employee[num];
+		printw(num,4,7);
+		printw(temp.Name,max(empmax+1,6),7);
+		for(rint j=1;j<=4;j++) printw(temp.info[j],6,7);
+		printw(weapon[temp.Weapon].Name,11,7);
+		printw(armor[temp.Armor].Name,11,7);
 		puts("");
 		intro;cin>>op;
 		if(op=="-1") return ;
-		if(!isdigit(op)||stoi(op)>7){rein;clean;goto begin;}
+		if(!isdigit(op)||stoi(op)>7||stoi(op)<1){rein;goto begin;}
 		int t=stoi(op);
 		Employee(3,num,t); 
 	}
 	if(mod==3){
-		#define tt man[num]
-		print("对员工进行操作，请输入对应操作编号。\n-1.返回\n");
+		#define temp employee[num]
 		if(inf==1){
 			de3:
-			print("员工原名字: "+tt.name+"\n员工新名字: ");cin>>op;
+			print("员工原名字: "+temp.Name+"\n员工新名字: ");cin>>op;
+			if(op=="-1") return ;
 			print("新名字是: "+op+"确定了吗？"+xuanze);
 			string namee=op;
 			intro;
 			cin>>op;
+			if(op=="-1") return ;
 			if(op=="0") goto begin;
 			else if(op!="1"){rein;clean;goto de3;}
 			sprint((string)"修改成功!将自动返回。\n");
-			tt.name=namee;empmax=max(empmax,siz(namee));
-			Sleep(1500);
+			temp.Name=namee;empmax=0;
+			for(rint i=1;i<=empcnt;i++) empmax=max(empmax,siz(employee[i].Name));
+			Sleep(500);
 		}
-		if(inf>=2&&inf<=5){inf-=2;
-			print("员工名字: "+tt.name+"\n");
-			print("员工"+infname(inf)+"  ");
-			print("等级: "+itos(tt.info[inf])+"\n");
+		if(inf>=2&&inf<=5){inf-=1;
+			print("员工名字: "+temp.Name+"\n");
+			print("员工 ");
+			print(infname(inf),infcol(inf)); 
+			print(" 等级: "+itos(temp.info[inf])+"\n");
 			print("lob 点: "+itos(lob)+"\n");
-			print("升级到"+itos(tt.info[inf]+1)+"级需要: "+itos(up[inf][tt.info[inf]])+" lob\n");
+			if(temp.info[inf]==5){
+				print("该技能已经升到顶级，无法继续升级，按任意键退出。");
+				getch();
+				return ;
+			}
+			print("升级到"+itos(temp.info[inf]+1)+"级需要: "+itos(up[inf][temp.info[inf]])+" lob\n");
 			print("要升级吗？");
-			if(lob>=up[inf][tt.info[inf]]){
+			if(lob>=up[inf][temp.info[inf]]){
 				print("升级输入1 ",10),sprint((string)"退出输入0\n",12);
 				intro;
 				cin>>op;
 				if(op=="0") return ;
-				sprint((string)"升级成功!将自动返回。\n");
-				lob-=up[inf][tt.info[inf]];
-				tt.info[inf]++;
-				Sleep(1000);
+				else if(op=="1"){
+					sprint((string)"升级成功!将自动返回。\n");
+					lob-=up[inf][temp.info[inf]];
+					temp.info[inf]++;
+					Sleep(1000);
+				}
+				else rein;
 			}
-			else{sprint((string)"lob 点不足!\n",12);}
+			else{sprint((string)"lob 点不足!\n",12);Sleep(1000);return ;}
+			inf+=1;
 		}
-		#undef tt
+		#undef temp
 	}
-	return ;
+	goto begin;
 }
 inline void Monster(int mod,int monn=0){
 	begin:
 	clean;
-	string op; 
+	string op,t; 
 	print("对异想体进行操作，请输入对应操作编号。\n-1.返回\n当前能量: ");
-	print(itos(energy)+"\n",10);
+	print(itos(PE_BOX)+"\n",10);
 	if(mod==1){
 		sprint((string)"异想体列表: \n");
 		for(rint i=1;i<siz(mon);i++){
 			printf("%d: ",i);
 			print(monster[mon[i]].Name+"\n",levcol(monster[mon[i]].Level));
 		}
-		intro;cin>>op;
+		intro;cin>>op;t=op;
 		if(op=="-1") return ;
 		if(!isdigit(op)||stoi(op)>=siz(mon)||stoi(op)<=0){rein;goto begin;}
-		Monster(2,stoi(op));
+		print("1.工作 2.查看信息\n"); 
+		cin>>op;
+		if(op=="-1") return ;
+		if(!isdigit(op)||stoi(op)>2||stoi(op)<=0){rein;goto begin;}
+		else Monster(stoi(op)+1,stoi(t));
 	}
 	if(mod==2){
-		#define t monster[mon[monn]]
-		print("1.基本信息"); 
-		if(t.Info){
-			print("\n异想体名称: "+t.Name+"\n");
+		#define tmon monster[mon[monn]]
+		print("对异想体 ");print((tmon.Is_Info)?tmon.Name:tmon.Num);print(" 工作\n工作选项: \n");
+		for(rint i=1;i<=4;i++) print(itos(i)+": "+tmon.WorkName[i]+"\n");
+		cin>>op;string mod=op; 
+		if(op=="-1") return ;
+		if(!isdigit(op)||stoi(op)>=5||stoi(op)<=0){rein;goto begin;}
+		print("选择员工\n");		
+		list_emp();
+		cin>>op;
+		if(op=="-1") return ;
+		if(!isdigit(op)||stoi(op)>empcnt||stoi(op)<=0){rein;goto begin;}
+		Sleep(1000);
+		work_mon(monn,stoi(op),stoi(mod));
+		#undef tmon
+	}
+	if(mod==3){
+		#define tmon monster[mon[monn]]
+		print("1.异常的 基础信息"); 
+		if(tmon.Is_Info){
+			print("\n异想体名称: "+tmon.Name+"\n");
 			print("等级: ");
-			print(t.Level+"\n",levcol(t.Level));
-			print("编号: "+t.Num+"\n");
-			print("逆卡巴拉计数器: "+itos(t.counter)+"\n");
+			print(tmon.Level+"\n",levcol(tmon.Level));
+			print("编号: "+tmon.Num+"\n");
+			print("逆卡巴拉计数器: "+itos(tmon.Count)+"\n");
 		}
-		else{print(" 需要 ");print(itos(t.info),(energy<t.info)?12:10);print(" 点能量\n");}
+		else{print(" 需要 ");print(itos(tmon.Value_Info),(PE_BOX<tmon.Value_Info)?12:10);print(" 点能量\n");}
 		puts("");
-		print("2.管理须知\n"); 
-		for(rint i=1;i<siz(t.manage);i++){
-			if(t.Manage[i]) print("管理须知 "+itos(i)+": "+t.manage[i].first+"\n");
+		print("2.异常的 管理须知\n"); 
+		for(rint i=1;i<siz(tmon.Manage);i++){
+			if(tmon.Is_Manage[i]) print("管理须知 "+itos(i)+": "+tmon.Manage[i].first+"\n");
 			else{
 				print("管理须知 "+itos(i)+" 需要 ");
-				print(itos(t.manage[i].second),(energy<t.manage[i].second)?12:10);
+				print(itos(tmon.Manage[i].second),(PE_BOX<tmon.Manage[i].second)?12:10);
 				print(" 点能量\n");
 			}
 		}
 		puts("");
-		print("3. E.G.O 武器"); 
-		if(t.Weapon){
-			print("\n名称: "+weapon[t.wea].name+"\n");
-			print("伤害属性: ");
-			print((string)damname(weapon[t.wea].col)+"\n",damcol(weapon[t.wea].col));
+		print("3.异常的 喜好\n");
+		for(rint i=1;i<=4;i++){
+			int MAX=7;
+			for(rint j=1;j<=5;j++) if(siz(worksuc(tmon.Work[i][j]))==4){MAX+=2;break;}
+			printw(work_name[i],MAX);
 		}
-		else{print(" 需要 ");print(itos(t.vwea),(energy<t.vwea)?12:10);print(" 点能量\n");}
+		for(rint j=1;j<=5;j++){
+			puts("");
+			for(rint i=1;i<=4;i++){
+				int MAX=3;
+				for(rint k=1;k<=5;k++) if(siz(worksuc(tmon.Work[i][k]))==4){MAX+=2;break;}
+				printw(Rome[j],3);
+				printw(worksuc(tmon.Work[i][j]),MAX);
+			}
+		}
 		puts("");
-		print("4. E.G.O 护甲"); 		
-		if(t.Armor){
-			print("\n名称: "+armor[t.ar].name+"\n");
+		print("4. E.G.O 武器"); 
+		if(tmon.Is_Weapon){
+			print("\n名称: "+weapon[tmon.Weapon].Name+"\n");
+			print("伤害属性: ");
+			print((string)damname(weapon[tmon.Weapon].Damage_Color)+"\n",damcol(weapon[tmon.Weapon].Damage_Color));
+		}
+		else{print(" 需要 ");print(itos(tmon.Value_Weapon),(PE_BOX<tmon.Value_Weapon)?12:10);print(" 点能量\n");}
+		puts("");
+		print("5. E.G.O 护甲"); 		
+		if(tmon.Is_Armor){
+			print("\n名称: "+armor[tmon.Armor].Name+"\n");
 			for(rint az=1;az<=4;az++){
 				int i=damage_color[az].second;
 				print((string)damage_color[az].first,i);
-				print("抗性: "+itos(armor[t.ar].damage_val[i]/10)+"."+itos(armor[t.ar].damage_val[i]%10)+"\n"); 
+				int t1=floor(armor[tmon.Armor].kangxing[i]),t2=(armor[tmon.Armor].kangxing[i]-t1)*10;
+				print("抗性: "+itos(t1)+"."+itos(t2)+"\n"); 
 			}
 		}
-		else{print(" 需要 ");print(itos(t.var),(energy<t.var)?12:10);print(" 点能量\n");}
+		else{print(" 需要 ");print(itos(tmon.Value_Armor),(PE_BOX<tmon.Value_Armor)?12:10);print(" 点能量\n");}
 		puts("");
 		cin>>op;
 		if(op=="-1") return ;
@@ -348,32 +410,32 @@ inline void Monster(int mod,int monn=0){
 		int num=stoi(op);
 		if(num>=1&&num<=4){
 			if(num==1){
-				if(t.Info==1) print("基本信息已经解锁过了!");
-				else if(energy>=t.info){energy-=t.info;t.Info=1;print("基本信息已解锁!");}
+				if(tmon.Is_Info==1) print("基本信息已经解锁过了!");
+				else if(PE_BOX>=tmon.Value_Info){PE_BOX-=tmon.Value_Info;tmon.Is_Info=1;print("基本信息已解锁!");}
 				else print("能量不足!");
 			}
-			if(num==2) Monster(3,monn);
-			if(num==3){
-				if(t.Weapon==1) print("E.G.O 武器信息已经解锁过了!");
-				else if(energy>=t.vwea){energy-=t.vwea;t.Weapon=1;print("E.G.O 武器信息已解锁!");}
-				else print("能量不足!");
-			}
+			if(num==2) Monster(4,monn);
 			if(num==4){
-				if(t.Armor==1) print("E.G.O 防具信息已经解锁过了!");
-				else if(energy>=t.var){energy-=t.var;t.Armor=1;print("E.G.O 防具信息已解锁!");}
+				if(tmon.Is_Weapon==1) print("E.G.O 武器信息已经解锁过了!");
+				else if(PE_BOX>=tmon.Value_Weapon){PE_BOX-=tmon.Value_Weapon;tmon.Is_Weapon=1;print("E.G.O 武器信息已解锁!");}
+				else print("能量不足!");
+			}
+			if(num==5){
+				if(tmon.Is_Armor==1) print("E.G.O 防具信息已经解锁过了!");
+				else if(PE_BOX>=tmon.Value_Armor){PE_BOX-=tmon.Value_Armor;tmon.Is_Armor=1;print("E.G.O 防具信息已解锁!");}
 				else print("能量不足!");
 			}
 			Sleep(1000);goto begin;
 		}
-		#undef t
+		#undef tmon
 	}
-	if(mod==3){
-		#define t monster[mon[monn]]
-		for(rint i=1;i<siz(t.manage);i++){
-			if(t.Manage[i]) print("管理须知 "+itos(i)+": "+t.manage[i].first+"\n");
+	if(mod==4){
+		#define tmon monster[mon[monn]]
+		for(rint i=1;i<siz(tmon.Manage);i++){
+			if(tmon.Is_Manage[i]) print("管理须知 "+itos(i)+": "+tmon.Manage[i].first+"\n");
 			else{
 				print("管理须知 "+itos(i)+" 需要 ");
-				print(itos(t.manage[i].second),(energy<t.manage[i].second)?12:10);
+				print(itos(tmon.Manage[i].second),(PE_BOX<tmon.Manage[i].second)?12:10);
 				print(" 点能量\n");
 			}
 		}
@@ -381,40 +443,41 @@ inline void Monster(int mod,int monn=0){
 		if(op=="-1") return ;
 		if(!isdigit(op)) goto begin;
 		int num=stoi(op);
-		if(num>=1&&num<siz(t.manage)){
-			if(t.Manage[num]==1) print("管理须知"),print(itos(num)),print("已经解锁过了!");
-			else if(energy>=t.manage[num].second){energy-=t.manage[num].second;t.Manage[num]=1;print("管理须知"),print(itos(num)),print("已解锁!");}
+		if(num>=1&&num<siz(tmon.Manage)){
+			if(tmon.Is_Manage[num]) print("管理须知"),print(itos(num)),print("已经解锁过了!");
+			else if(PE_BOX>=tmon.Manage[num].second){PE_BOX-=tmon.Manage[num].second;tmon.Is_Manage[num]=1;print("管理须知"),print(itos(num)),print("已解锁!");}
 			else print("能量不足!");
 		}
 		else{rein;goto begin;}
 	}
-	return ;
+	goto begin;
 } 
-inline void menu(){string op;
+inline int menu(){string op;
 	pre:
 	clean; 
 	printf("双十中学\nDouble Ten Company\n\n");
 	printf("今天是第%d天\n",day);
-	print("能量: ",green);print(energy,green);printf("/");print(lim[day],green);
+	print("能量: ",green);print(PE_BOX,green);printf("/");print(lim[day],green);
 	print("\n-1.退出\n");
 	print("1.员工\n");
 	print("2.异想体\n");
 	print("3.仓库\n");
-	if(energy<=lim[day]) print("4.结束这一天\n"); 
+	if(PE_BOX>=lim[day]) print("4.结束这一天\n"); 
 	intro;
 	cin>>op;
 	if(op=="-1") exit(0);
 	else if(op=="1"||op=="2"||op=="3") goto next;
 	else{rein;clean;goto pre;}
 	next:
-	if(op=="1") Employee(1);
+	if(op=="1") Employee(26);
 	if(op=="2") Monster(1);
-	if(op=="3");
-	return ;
+//	if(op=="3");
+	if(op=="4") return 0; 
+	return 1;
 }
 inline void game(){
 	clean;newday(); 
-	while(1) menu();
+	while(menu());
 	return ;
 }
 int main(){
@@ -422,7 +485,6 @@ int main(){
 //	start();
 	login();
 //	az=import();
-	game();
+	while(day<=2) game();
 	return 0; 
 }
-
