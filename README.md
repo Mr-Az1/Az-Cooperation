@@ -1,4 +1,4 @@
-﻿# 双十中学
+﻿# Az-c Cooperation
 
 设计者：咕咕咕的小飞瑶 Mr.Az
 
