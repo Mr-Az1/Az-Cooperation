@@ -1,4 +1,4 @@
-﻿# Az-c Cooperation
+﻿# Az-Cooperation
 
 设计者：咕咕咕的小飞瑶 Mr.Az
 
