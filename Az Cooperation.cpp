@@ -5,6 +5,7 @@ string name="No name",xuanze="(是的输入1，不是输入0)\n";
 inline void init(){
 	printf("游戏正在初始化...\n");int st=clock();
 	mon.push_back(114514);
+//	iofast();
 	set_window()	;print("窗口大小设置完成\n");
 	if(!WINDOWS7){init_color()	;print("颜色信息已设置！\n");}
 	init_infomation();print("基本信息设置完成！\n");
@@ -127,7 +128,7 @@ inline void login(){
 	if(op=="0"){clean;goto begin;}
 	else if(op!="1") {rein;goto decide;}
 	string nname=name;
-	for(rint i=0;i<nname.size();i++) nname[i]=tolower(nname[i]);
+	for(rint i=0;i<int(nname.size());i++) nname[i]=tolower(nname[i]);
 	if(nname=="sans") printf("原来，你也玩UT\n"); 
 	if(nname=="mr.az"){
 		printf("管理员账户已开启。\n");
@@ -187,7 +188,7 @@ inline void newday(){
 		else{rein;clean;goto choose;}
 		next1:
 			
-		sprint((string)"你选择了 H-2-16-65，确定你的选择了吗？"+xuanze);
+		sprint((string)"你选择了 H-2-16-65，确定吗？"+xuanze);
 		intro;
 		inin:
 		cin>>op;

@@ -114,7 +114,7 @@ inline string infname(int p){
 }
 inline string workname(int p){return work_name[p];}
 inline bool is(char ch){
-	string ss="~~~<^_^>~~~ !@#$%&*()+-={}[]|\\:;\"\',./?";
+	string ss="~<^_^>~!@#$%&*()+-={}[]|\\:;\"\',./?";
 	for(rint i=0;i<siz(ss);i++) if(ch==ss[i]) return 1;
 	return 0;
 }
@@ -150,7 +150,7 @@ inline void stoc(auto &t,string s){
 	return ;
 }
 inline bool find(string s,vector<string> search){
-	for(rint i=0;i<search.size();i++) if(s.find(search[i])!=string::npos) return 1;
+	for(rint i=0;i<int(search.size());i++) if(s.find(search[i])!=string::npos) return 1;
 	return 0;
 }
 inline string to_string(const char* x){return string(x);}
@@ -163,25 +163,25 @@ inline bool check_name(string s){
 }
 inline void print(string s,int color=7){
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),color);
-	cout<<s;
+	puts(s.c_str());
 	reset_color(); 
 	return ;
 }
 inline void rprint(string s,RGB color={192,192,192}){
 	wprintf(L"\x1b[38;2;%d;%d;%dm",color.r,color.g,color.b);
-	printf("%s",s.c_str());
+	puts(s.c_str());
 	reset_color();
 	return ;
 }
 inline void sprint(string s,int color=7,int t=SLEEP_TIME){
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),color);
-	for(rint i=0;i<siz(s);i++){cout<<s[i];Sleep(t);}
+	for(rint i=0;i<siz(s);i++){putchar(s[i]),Sleep(t);}
 	reset_color();
 	return ;
 }
 inline void rsprint(string s,RGB color={192,192,192},int t=SLEEP_TIME){
 	wprintf(L"\x1b[38;2;%d;%d;%dm",color.r,color.g,color.b);
-	for(rint i=0;i<siz(s);i++) printf("%c",s[i]),Sleep(t);
+	for(rint i=0;i<siz(s);i++) putchar(s[i]),Sleep(t);
 	reset_color();
 	return ;
 }
@@ -197,28 +197,28 @@ template<typename T>
 inline void sprintw(T x,int w=0,int color=7,int t=SLEEP_TIME){
 	string s=to_string(x);
 	sprint(s,color,t);
-	for(rint i=siz(s);i<=w;i++) print(" ");
+	for(rint i=siz(s);i<=w;i++) putchar(' ');
 	return ;
 }
 template<typename T>
 inline void rsprintw(T x,int w=0,RGB color={192,192,192},int t=SLEEP_TIME){
 	string s=to_string(x);
 	rsprint(s,color,t);
-	for(rint i=siz(s);i<=w;i++) print(" ");
+	for(rint i=siz(s);i<=w;i++) putchar(' ');
 	return ;
 }
 template<typename T>
 inline void printw(T x,int w=0,int color=7){
 	string s=to_string(x);
 	print(s,color);
-	for(rint i=siz(s);i<=w;i++) print(" ");
+	for(rint i=siz(s);i<=w;i++) putchar(' ');
 	return ;
 }
 template<typename T>
 inline void rprintw(T x,int w=0,RGB color={192,192,192}){
 	string s=to_string(x);
 	rprint(s,color);
-	for(rint i=siz(s);i<=w;i++) print(" ");
+	for(rint i=siz(s);i<=w;i++) putchar(' ');
 	return ;
 }
 inline void fputs(string s,FILE *stream){
@@ -227,7 +227,7 @@ inline void fputs(string s,FILE *stream){
 } 
 inline void clear(stack<int> &s){while(s.size()) s.pop();return ;}
 inline void clear(vector<string> &s){s.clear();return ;}
-inline void print(stack<int> s){while(s.size()) printf("%d ",s.top()),s.pop();puts("");}
+inline void print(stack<int> s){while(s.size()) cout<<s.top()<<" ",s.pop();puts("");}
 inline void init_color(){
 	HANDLE hOut=GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD dwMode=0; 
